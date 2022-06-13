@@ -163,8 +163,8 @@ def notepad_gui():
     help_menu.add_command(label='License', command=lambda: tk.messagebox.showinfo('License', 'N0tep4d is licensed under the GNU-GPL license.'))
     # make a submenu in the help menu
     help_menu.add_cascade(label='Documentation', menu=tk.Menu(help_menu))
-    help_menu.add_cascade(label='Report a bug', command=lambda: webbrowser.open('https://github.com/UniqueName12345/n0tep4d/issues')
-    help_menu.add_cascade(label='View source code', command=lambda: webbrowser.open('https://github.com/UniqueName12345/n0tep4d/')
+    help_menu.add_cascade(label='Report a bug', command=lambda: webbrowser.open('https://github.com/UniqueName12345/n0tep4d/issues'))
+    help_menu.add_cascade(label='View source code', command=lambda: webbrowser.open('https://github.com/UniqueName12345/n0tep4d/'))
     # create a edit menu
     edit_menu = tk.Menu(menu_bar)
     # add the edit menu to the menu bar
