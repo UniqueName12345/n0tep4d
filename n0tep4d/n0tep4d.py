@@ -71,7 +71,7 @@ def find_substring(text_box):
     window2 = tk.Tk()
     # set the window title
     window2.title('Find - N0tep4d')
-    window2.iconbitmap('n0tep4d.ico')
+    window2.iconbitmap('n0tep4d/n0tep4d.ico')
     # create a text box labeled "Substring"
     substring_box = tk.Entry(window2)
     # create a button labeled "Find" below the text box
@@ -98,7 +98,7 @@ def custom_search(text):
     window3 = tk.Tk()
     # set the window title
     window3.title('Search (custom) - N0tep4d')
-    window3.iconbitmap('n0tep4d.ico')
+    window3.iconbitmap('n0tep4d/n0tep4d.ico')
     # create a text box labeled "Search"
     search_box = tk.Entry(window3)
     # put the text in the text box
@@ -124,7 +124,7 @@ def notepad_gui():
     window.protocol('WM_DELETE_WINDOW', lambda: exit_program(window, text_box))
     # set the window title
     window.title('N0tep4d')
-    window.iconbitmap('n0tep4d.ico')
+    window.iconbitmap('n0tep4d/n0tep4d.ico')
     # create a text box
     text_box = tk.Text(window)
     # bind the save function to CTRL+S
@@ -161,10 +161,13 @@ def notepad_gui():
     menu_bar.add_cascade(label='Help', menu=help_menu)
     help_menu.add_command(label='About', command=lambda: tk.messagebox.showinfo('About', 'N0tep4d is a notepad clone that saves in a GUI interface (with tkinter).'))
     help_menu.add_command(label='License', command=lambda: tk.messagebox.showinfo('License', 'N0tep4d is licensed under the GNU-GPL license.'))
-    # make a submenu in the help menu
-    help_menu.add_cascade(label='Documentation', menu=tk.Menu(help_menu))
-    help_menu.add_cascade(label='Report a bug', command=lambda: webbrowser.open('https://github.com/UniqueName12345/n0tep4d/issues'))
-    help_menu.add_cascade(label='View source code', command=lambda: webbrowser.open('https://github.com/UniqueName12345/n0tep4d/'))
+    # create a documentation menu
+    documentation_menu = tk.Menu(menu_bar)
+    # add the documentation menu to the help menu
+    help_menu.add_cascade(label='Documentation', menu=documentation_menu)
+    documentation_menu.add_command(label='Homepage', command=lambda: webbrowser.open('https://github.com/UniqueName12345/n0tep4d'))
+    documentation_menu.add_command(label='Report Bugs', command=lambda: webbrowser.open('https://github.com/UniqueName12345/n0tep4d/issues'))
+    documentation_menu.config(tearoff=0)
     # create a edit menu
     edit_menu = tk.Menu(menu_bar)
     # add the edit menu to the menu bar
