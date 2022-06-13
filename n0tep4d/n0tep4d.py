@@ -1,12 +1,13 @@
 # a notepad clone that saves in a GUI interface (with tkinter)
 import datetime
-import os # for checking if the plugins folder is downloaded
+import os
+import sys # for checking if the plugins folder is downloaded
 import tkinter as tk # everything related to the GUI
 import tkinter.filedialog # for running the program
 import tkinter.messagebox # for displaying a message box
 import time
 import webbrowser # for opening URLs and for the search bar
-
+import pyperclip
 # the time the file was last saved
 last_save = time.time()
 
@@ -133,8 +134,10 @@ def notepad_gui():
     text_box.bind('<Control-o>', lambda event: load_file(text_box))
     # bind the exit function to CTRL+Q
     text_box.bind('<Control-q>', lambda event: exit_program(window, text_box))
-    # bind CTRL+C to an error message
-    text_box.bind('<Control-c>', lambda event: tk.messagebox.showerror('Error', 'You cannot copy from n0tep4d yet'))
+    # bind CTRL+C to copy the selected text
+    text_box.bind('<Control-c>', lambda event: pyperclip.copy(text_box.selection_get()))
+    # bind CTRL+V to paste the last thing from the clipboard
+    text_box.bind('<Control-v>', lambda event: text_box.insert(text_box.index('insert'), pyperclip.paste()))
     # when right-clicking on the text box, minimize the window
     text_box.bind('<Button-3>', lambda event: window.iconify())
     # when highlighting text and pressing CTRL+1, open the number of characters selected in a new window and in human-readable format
@@ -223,6 +226,14 @@ def notepad_gui():
     qa_menu.add_command(label='Ask a question (StackOverflow)', command=lambda: webbrowser.open('https://stackoverflow.com/'))
     qa_menu.add_command(label='Ask a question (Answers.com)', command=lambda: webbrowser.open('https://answers.com/'))
     qa_menu.config(tearoff=0)
+    # make a more menu
+    more_menu = tk.Menu(menu_bar)
+    # add the more menu to the menu bar
+    menu_bar.add_cascade(label='Misc', menu=more_menu)
+    more_menu.add_command(label='Send email to...', command=lambda: webbrowser.open('mailto:' + text_box.selection_get()))
+    more_menu.add_command(label='Copy to clipboard', command=lambda: pyperclip.copy(text_box.selection_get()))
+    more_menu.add_command(label='Paste from clipboard', command=lambda: text_box.insert('insert', pyperclip.paste()))
+    more_menu.add_command(label='Open in browser (shortcut: Ctrl+Shift+U)', command=lambda: webbrowser.open(text_box.selection_get()))
     # run the main loop
     window.mainloop()
 
