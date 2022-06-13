@@ -37,7 +37,9 @@ def load_file(text_box):
 def exit_program(window, text_box):
     # if the file has been saved in the last 5 minutes or the file is blank
     if time.time() - last_save < 300 or text_box.get('1.0', 'end-1c') == '':
-        # just close the window
+        # first, destroy the textbox
+        text_box.destroy()
+        # then, destroy the window
         window.destroy()
     # if the file has not been saved in the last 5 minutes, ask if they want to save the file
     elif tk.messagebox.askyesno('Save', 'Do you want to save the file?'):
@@ -136,14 +138,16 @@ def notepad_gui():
     text_box.bind('<Control-q>', lambda event: exit_program(window, text_box))
     # bind CTRL+C to copy the selected text
     text_box.bind('<Control-c>', lambda event: pyperclip.copy(text_box.selection_get()))
-    # bind CTRL+V to paste the last thing from the clipboard
-    text_box.bind('<Control-v>', lambda event: text_box.insert(text_box.index('insert'), pyperclip.paste()))
+    # bind CTRL+V to paste the last thing from the clipboard, excluding the first few garbage characters
+    text_box.bind('<Control-v>', lambda event: text_box.insert(text_box.index('insert'), pyperclip.paste()[3:]))
     # when right-clicking on the text box, minimize the window
     text_box.bind('<Button-3>', lambda event: window.iconify())
     # when highlighting text and pressing CTRL+1, open the number of characters selected in a new window and in human-readable format
     text_box.bind('<Control-Delete>', lambda event: tk.messagebox.showinfo('Selected text', text_box.selection_get()))
     # when highlighting a URL and pressing CTRL+ALT+U, open the URL in a new window
     text_box.bind('<Control-Alt-u>', lambda event: url_helper(text_box.selection_get()))
+    # when the textbox is deleted, destroy the window
+    text_box.bind('<Delete>', lambda event: window.destroy())
     # set the text box to be the size of the window
     text_box.pack(expand=True, fill='both')
     # create a menu bar at the bottom of the screen
