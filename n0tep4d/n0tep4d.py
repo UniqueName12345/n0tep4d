@@ -211,6 +211,18 @@ def notepad_gui():
     date_time_menu.add_command(label='Get current date', command=lambda: text_box.insert('insert', datetime.datetime.now().strftime('%d/%m/%Y')))
     date_time_menu.add_command(label='Get current time', command=lambda: text_box.insert('insert', datetime.datetime.now().strftime('%H:%M:%S')))
     date_time_menu.config(tearoff=0)
+    # make a Q&A menu for answering any questions
+    qa_menu = tk.Menu(menu_bar)
+    # add the Q&A menu to the menu bar
+    menu_bar.add_cascade(label='Question and Answer', menu=qa_menu)
+    qa_menu.add_command(label='Search for answer (Quora)', command=lambda: webbrowser.open('https://www.quora.com/search?q=' + text_box.selection_get()))
+    qa_menu.add_command(label='Search for answer (StackOverflow)', command=lambda: webbrowser.open('https://stackoverflow.com/search?q=' + text_box.selection_get()))
+    qa_menu.add_command(label='Search for answer (Answers.com)', command=lambda: webbrowser.open('https://answers.com/search?q=' + text_box.selection_get()))
+    qa_menu.add_separator()
+    qa_menu.add_command(label='Ask a question (Quora)', command=lambda: webbrowser.open('https://www.quora.com/'))
+    qa_menu.add_command(label='Ask a question (StackOverflow)', command=lambda: webbrowser.open('https://stackoverflow.com/'))
+    qa_menu.add_command(label='Ask a question (Answers.com)', command=lambda: webbrowser.open('https://answers.com/'))
+    qa_menu.config(tearoff=0)
     # run the main loop
     window.mainloop()
 
